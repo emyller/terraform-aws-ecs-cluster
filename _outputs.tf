@@ -11,7 +11,7 @@ output "name" {
   ]))[1]
 }
 
-output "instances_security_group_id" {
-  description = "The ID of the Security Group created for ECS instances."
-  value = module.security_group_ecs_instances.id
+output "security_group_id" {
+  description = "The ID of the Security Group created for ECS resources."
+  value = module.security_group.id
 }

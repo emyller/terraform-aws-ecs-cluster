@@ -3,25 +3,20 @@ variable "name" {
   type = string
 }
 
-variable "subnets" {
-  description = "The subnets to place objects in."
-  type = list(string)
-}
-
-variable "instance_type" {
-  description = "The instance type of the EC2 hosts to spin up."
+variable "vpc_id" {
+  description = "VPC to put resources in."
   type = string
 }
 
-variable "instance_key_name" {
-  description = "The SSH key name in EC2 to manually connect to hosts."
-  type = string
-}
-
-variable "max_instances_count" {
-  type = number
-  description = "The maximum number of instances to provision in the cluster."
-  default = 10
+variable "ec2_settings" {
+  description = "EC2-specific settings, when using EC2 as default provider."
+  type = object({
+    subnets = list(string)
+    instance_type = string
+    instance_key_name = string
+    max_instances_count = number
+  })
+  default = null
 }
 
 variable "ingress_cidr_blocks" {

@@ -40,9 +40,7 @@ resource "aws_launch_template" "main" {
 
   network_interfaces {
     associate_public_ip_address = false
-    security_groups = concat([
-      module.security_group_ecs_instances.id,
-    ], var.extra_security_groups)
+    security_groups = concat([var.security_group_id], var.extra_security_groups)
   }
 
   monitoring {
@@ -57,17 +55,4 @@ resource "aws_launch_template" "main" {
       volume_type = local.ami_volume.ebs.volume_type
     }
   }
-}
-
-module "security_group_ecs_instances" {
-  /*
-  The security group to wrap EC2 instances in HTTP services
-  */
-  source = "emyller/security-group/aws"
-  version = "~> 1.0"
-  name = "i-${var.name}"
-  vpc_id = local.vpc_id
-  ingress_security_groups = var.ingress_security_groups
-  ingress_cidr_blocks = var.ingress_cidr_blocks
-  allow_self_ingress = true
 }
