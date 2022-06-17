@@ -10,7 +10,11 @@ resource "aws_ecs_cluster_capacity_providers" "fargate" {
   EC2 capacity provider
   */
   cluster_name = aws_ecs_cluster.main.name
-  capacity_providers = ["FARGATE"]
+  capacity_providers = [var.use_spot ? "FARGATE_SPOT" : "FARGATE"]
+
+  default_capacity_provider_strategy {
+    capacity_provider = var.use_spot ? "FARGATE_SPOT" : "FARGATE"
+  }
 }
 
 resource "aws_ecs_cluster_capacity_providers" "ec2" {

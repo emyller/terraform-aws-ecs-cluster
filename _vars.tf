@@ -33,3 +33,9 @@ variable "extra_security_groups" {
   type = list(string)
   default = []
 }
+
+variable "use_spot" {
+  description = "Use Fargate Spot instead of Fargate. EC2 not supported yet."
+  type = bool
+  default = false
+}
